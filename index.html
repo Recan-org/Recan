@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Recan • Login</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --green: #2ecc71;
+      --green-dark: #27ae60;
+      --gray: #64748b;
+      --shadow: 0 6px 24px rgba(0,0,0,0.08);
+    }
+    /* dark theme variables */
+    :root.dark {
+      --bg: #1e1e2f;
+      --card: #2a2a3d;
+      --text: #e0e0eb;
+      --green: #4cd137;
+      --green-dark: #44bd32;
+      --gray: #a5a5b1;
+      --shadow: 0 6px 24px rgba(0,0,0,0.5);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .login-box {
+      background: var(--card);
+      padding: 40px 32px;
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+      color: var(--green-dark);
+    }
+    .subtitle { color: var(--gray); margin-bottom: 32px; font-size: 0.95rem; }
+    input {
+      width: 100%;
+      padding: 14px 16px;
+      margin: 12px 0;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: border-color 0.2s;
+    }
+    input:focus {
+      outline: none;
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(46,204,113,0.15);
+    }
+    button {
+      width: 100%;
+      padding: 14px;
+      background: var(--green);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.25s;
+    }
+    button:hover { background: var(--green-dark); }
+
+    /* theme toggle button overrides */
+    .theme-toggle {
+      /* undo full-width */
+      width: auto;
+      padding: 8px;
+      background: transparent;
+      border: none;
+      font-size: 1.25rem;
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      cursor: pointer;
+      color: var(--text);
+    }
+    .theme-toggle:hover { opacity: 0.8; }
+    .link {
+      margin-top: 20px;
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+    .link a { color: var(--green-dark); text-decoration: none; font-weight: 500; }
+    .link a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+  <div class="login-box">
+    <h1>ReCan</h1>
+    <p class="subtitle">Recycle smart, earn rewards – for a greener Hong Kong</p>
+
+    <form id="loginForm" novalidate>
+      <input id="email" name="email" type="email"    placeholder="Email"    required autocomplete="email" />
+      <input id="password" name="password" type="password" placeholder="Password" required autocomplete="current-password" />
+      <div id="loginError" role="alert" aria-live="polite" style="color:#e11d48; margin-top:8px; font-size:0.95rem;"></div>
+      <button type="submit">Sign In</button>
+    </form>
+
+    <div class="link">
+      <a href="#">Forgot password?</a> • <a href="#">Create account</a>
+    </div>
+  </div>
+
+  <script>
+    // theme toggle logic
+    (function(){
+      const tgl = document.getElementById('themeToggle');
+      const update = ()=>{
+        const dark = document.documentElement.classList.contains('dark');
+        tgl.textContent = dark? '☀️':'🌙';
+      };
+      if(localStorage.getItem('theme')==='dark') document.documentElement.classList.add('dark');
+      update();
+      tgl.addEventListener('click', ()=>{
+        document.documentElement.classList.toggle('dark');
+        const isDark = document.documentElement.classList.contains('dark');
+        localStorage.setItem('theme', isDark?'dark':'light');
+        update();
+      });
+    })();
+
+    const form = document.getElementById('loginForm');
+    const errorBox = document.getElementById('loginError');
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      errorBox.textContent = '';
+      const email = form.querySelector('input[type="email"]').value.trim();
+      const password = form.querySelector('input[type="password"]').value;
+
+      if (!email || !password) {
+        errorBox.textContent = 'Please enter email and password.';
+        return;
+      }
+
+      const submitBtn = form.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Signing in...';
+
+      // Simulate async backend check (replace with real API call)
+      setTimeout(() => {
+        const validEmail = 'user@example.com';
+        const validPassword = 'password123';
+
+        if (email === validEmail && password === validPassword) {
+          localStorage.setItem('eco_logged_in', '1');
+          window.location.href = 'home.html';
+        } else {
+          errorBox.textContent = 'Invalid email or password.';
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Sign In';
+        }
+      }, 900);
+    });
+  </script>
+
+</body>
+</html>
