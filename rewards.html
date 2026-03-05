@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ReCan • Rewards</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --green: #2ecc71;
+      --green-dark: #27ae60;
+      --gray: #64748b;
+      --light-green: #ecfbf3;
+      --shadow: 0 6px 24px rgba(0,0,0,0.08);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    header {
+      background: white;
+      padding: 16px 24px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 { font-size: 1.5rem; color: var(--green-dark); }
+    nav a {
+      margin-left: 24px;
+      color: var(--gray);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    nav a:hover { color: var(--green-dark); }
+
+    main {
+      max-width: 1100px;
+      margin: 32px auto;
+      padding: 0 20px;
+    }
+    .hero {
+      text-align: center;
+      margin-bottom: 32px;
+      animation: fadeIn 0.6s ease-out;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    .hero h2 { font-size: 2rem; color: var(--green-dark); margin-bottom: 8px; }
+    .hero p { color: var(--gray); font-size: 1.1rem; }
+
+    .balance-card {
+      background: var(--light-green);
+      padding: 20px;
+      border-radius: 16px;
+      text-align: center;
+      margin-bottom: 32px;
+      box-shadow: var(--shadow);
+    }
+    .balance-card .points { font-size: 3rem; font-weight: 700; color: var(--green); }
+    .balance-card p { color: var(--gray); margin-top: 4px; }
+
+    .tabs {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .tab {
+      padding: 10px 20px;
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .tab.active, .tab:hover {
+      background: var(--green);
+      color: white;
+      border-color: var(--green);
+    }
+
+    .rewards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .reward-card {
+      background: var(--card);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .reward-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+    }
+    .reward-img-placeholder {
+      height: 140px;
+      background: linear-gradient(135deg, var(--light-green), #d1fae5);
+      display: grid;
+      place-items: center;
+      font-size: 3rem;
+      color: var(--green-dark);
+    }
+    .reward-content {
+      padding: 20px;
+    }
+    .reward-content h3 { font-size: 1.25rem; margin-bottom: 8px; }
+    .reward-content .cost { font-size: 1.4rem; font-weight: 700; color: var(--green); margin: 8px 0; }
+    .reward-content p { color: var(--gray); font-size: 0.95rem; margin-bottom: 16px; }
+    .redeem-btn {
+      width: 100%;
+      padding: 12px;
+      background: var(--green);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .redeem-btn:hover { background: var(--green-dark); }
+    .redeem-btn:disabled {
+      background: #cbd5e1;
+      cursor: not-allowed;
+    }
+    .impact-tip {
+      text-align: center;
+      margin-top: 40px;
+      color: var(--gray);
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>ReCan</h1>
+    <nav>
+      <a href="home.html">Dashboard</a>
+      <a href="account.html">Account</a>
+      <a href="index.html" id="logout">Sign out</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="hero">
+      <h2>Rewards Store</h2>
+      <p>Turn your EcoPoints into real impact and perks</p>
+    </div>
+
+    <div class="balance-card">
+      <div class="points">1,480</div>
+      <p>Available EcoPoints</p>
+    </div>
+
+    <div class="tabs">
+      <div class="tab active">All</div>
+      <div class="tab">Octopus Credit</div>
+      <div class="tab">Discounts</div>
+      <div class="tab">Products</div>
+    </div>
+
+    <div class="rewards-grid">
+      <div class="reward-card">
+        <div class="reward-img-placeholder">💳</div>
+        <div class="reward-content">
+          <h3>Octopus Credit</h3>
+          <div class="cost">HK$50</div>
+          <p>Direct top-up to your Octopus card – perfect for daily commute</p>
+          <button class="redeem-btn" onclick="redeemReward('Octopus HK$50 Credit', 500)">Redeem (500 pts)</button>
+        </div>
+      </div>
+
+      <div class="reward-card">
+        <div class="reward-img-placeholder">☕</div>
+        <div class="reward-content">
+          <h3>Coffee Voucher</h3>
+          <div class="cost">HK$30</div>
+          <p>Free medium drink at participating cafés (e.g. Starbucks, Pacific Coffee)</p>
+          <button class="redeem-btn" onclick="redeemReward('HK$30 Coffee Voucher', 350)">Redeem (350 pts)</button>
+        </div>
+      </div>
+
+      <div class="reward-card">
+        <div class="reward-img-placeholder">🛍️</div>
+        <div class="reward-content">
+          <h3>Eco-Friendly Tote Bag</h3>
+          <div class="cost">HK$80 value</div>
+          <p>Reusable organic cotton bag – delivered or collect at partner stores</p>
+          <button class="redeem-btn" onclick="redeemReward('Eco Tote Bag', 800)">Redeem (800 pts)</button>
+        </div>
+      </div>
+
+      <div class="reward-card">
+        <div class="reward-img-placeholder">🌱</div>
+        <div class="reward-content">
+          <h3>Plant 5 Trees</h3>
+          <div class="cost">Impact reward</div>
+          <p>Your points help plant trees in Hong Kong reforestation projects</p>
+          <button class="redeem-btn" onclick="redeemReward('Plant 5 Trees', 600)">Redeem (600 pts)</button>
+        </div>
+      </div>
+
+      <div class="reward-card">
+        <div class="reward-img-placeholder">🎟️</div>
+        <div class="reward-content">
+          <h3>MTR 1-Day Pass</h3>
+          <div class="cost">HK$65 value</div>
+          <p>Unlimited MTR rides for one day – great for explorers</p>
+          <button class="redeem-btn" disabled style="cursor:not-allowed;">Coming Soon (1,200 pts)</button>
+        </div>
+      </div>
+
+      <div class="reward-card">
+        <div class="reward-img-placeholder">📱</div>
+        <div class="reward-content">
+          <h3>Phone Accessories Set</h3>
+          <div class="cost">HK$120 value</div>
+          <p>Eco-friendly bamboo phone case + screen protector</p>
+          <button class="redeem-btn" onclick="redeemReward('Eco Phone Accessories', 950)">Redeem (950 pts)</button>
+        </div>
+      </div>
+    </div>
+
+    <p class="impact-tip">Every redemption supports verified sustainability partners — your points make a real difference for Hong Kong's environment.</p>
+  </main>
+
+  <script>
+    function redeemReward(name, pointsNeeded) {
+      const currentPoints = 1480; // mock – in real app, fetch from user data
+      if (currentPoints < pointsNeeded) {
+        alert(`Not enough points!\nYou need ${pointsNeeded} pts for "${name}".\nYou have ${currentPoints} pts.`);
+        return;
+      }
+
+      if (confirm(`Redeem "${name}" for ${pointsNeeded} EcoPoints?\nThis cannot be undone.`)) {
+        alert(`Success! "${name}" redeemed.\n${pointsNeeded} points deducted.\nCheck your email / Octopus / partner account for details.`);
+        // In real app: deduct points, record transaction, show success page or update UI
+      }
+    }
+
+    document.getElementById('logout').addEventListener('click', e => {
+      if (!confirm('Sign out?')) e.preventDefault();
+    });
+  </script>
+
+</body>
+</html>
