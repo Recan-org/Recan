@@ -114,6 +114,38 @@
       margin-left: 24px;
     }
     .theme-toggle:hover { opacity: 0.8; }
+
+    #google_translate_element {
+  vertical-align: middle;
+}
+
+.goog-te-gadget {
+  font-size: 0 !important;  /* Hide "Powered by Google Translate" text if desired */
+  color: var(--text) !important;
+}
+
+.goog-te-gadget-simple {
+  background: transparent !important;
+  border: 1px solid var(--gray) !important;
+  border-radius: 6px !important;
+  padding: 4px 8px !important;
+  font-size: 0.95rem !important;
+}
+
+.goog-te-menu-value span {
+  color: var(--text) !important;
+  text-decoration: none !important;
+}
+
+body.dark .goog-te-gadget-simple {
+  border-color: #5a5a7a !important;
+  background: #2a2a3d !important;
+}
+
+.goog-te-banner-frame,
+.goog-te-menu-frame {
+  display: none !important;  /* Optional: hide top banner if it appears */
+}
   </style>
 </head>
 <body>
@@ -121,9 +153,11 @@
   <header>
     <h1>ReCan</h1>
     <nav>
-      <a href="#rewards">Rewards</a>
+      <a href="rewards.html">Rewards</a>
       <a href="account.html">Account</a>
       <a href="index.html" id="logout">Sign out</a>
+      <div id="google_translate_element" style="display: inline-block; margin-left: 20px;">
+        <!-- Google Translate widget will be injected here -->
       <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">🌙</button>
     </nav>
   </header>
@@ -141,6 +175,7 @@
         <p style="margin-top:8px;color:var(--gray);">EcoPoints</p>
         <div class="streak">Current Streak: <span>7 days</span> 🔥</div>
         <div class="qr-prompt">Scan QR at kiosk to deposit & earn more!</div>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=placeholder-${Date.now()}" alt="QR Code"/>
       </div>
 
       <div class="card">
@@ -173,6 +208,7 @@
       </div>
     </div>
   </main>
+  <div id="google_translate_element"></div>
 
   <script>
     // theme toggle
@@ -204,7 +240,22 @@
         localStorage.removeItem('eco_logged_in');
       }
     });
+
   </script>
+
+  <script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',                    // Your site's default language
+    // Optional: limit to specific languages (add codes like zh-TW for Traditional Chinese)
+    // includedLanguages: 'en,zh-TW,zh-CN,ja,ko,th,vi',
+    layout: google.translate.TranslateElement.InlineLayout.SIMPLE,  // Simple dropdown
+    autoDisplay: false                     // Don't auto-translate on load
+  }, 'google_translate_element');
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 </body>
 </html>
