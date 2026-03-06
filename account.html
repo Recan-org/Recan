@@ -99,6 +99,39 @@
     th { color: var(--gray); font-weight: 500; }
     ul.redeems { list-style: none; margin-top: 16px; }
     ul.redeems li { padding: 12px 0; border-bottom: 1px solid #f1f5f9; color: var(--gray); }
+
+    /* Google Translate widget styling */
+#google_translate_element {
+  vertical-align: middle;
+}
+
+.goog-te-gadget {
+  font-size: 0 !important;  /* Hide "Powered by Google Translate" text if desired */
+  color: var(--text) !important;
+}
+
+.goog-te-gadget-simple {
+  background: transparent !important;
+  border: 1px solid var(--gray) !important;
+  border-radius: 6px !important;
+  padding: 4px 8px !important;
+  font-size: 0.95rem !important;
+}
+
+.goog-te-menu-value span {
+  color: var(--text) !important;
+  text-decoration: none !important;
+}
+
+body.dark .goog-te-gadget-simple {
+  border-color: #5a5a7a !important;
+  background: #2a2a3d !important;
+}
+
+.goog-te-banner-frame,
+.goog-te-menu-frame {
+  display: none !important;  /* Optional: hide top banner if it appears */
+}
   </style>
 </head>
 <body>
@@ -107,8 +140,9 @@
     <h1>ReCan</h1>
     <nav>
       <a href="home.html">Dashboard</a>
-      <a href="home.html#rewards">Rewards</a>
+      <a href="rewards.html">Rewards</a>
       <a href="index.html" id="logout">Sign out</a>
+      <div id="google_translate_element" style="display: inline-block; margin-left: 20px;">
       <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">🌙</button>
     </nav>
   </header>
@@ -196,6 +230,19 @@
       if (!confirm('Sign out?')) e.preventDefault();
     });
   </script>
+  <script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',                    // Your site's default language
+    // Optional: limit to specific languages (add codes like zh-TW for Traditional Chinese)
+    // includedLanguages: 'en,zh-TW,zh-CN,ja,ko,th,vi',
+    layout: google.translate.TranslateElement.InlineLayout.SIMPLE,  // Simple dropdown
+    autoDisplay: false                     // Don't auto-translate on load
+  }, 'google_translate_element');
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 </body>
 </html>
